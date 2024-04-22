@@ -1,6 +1,6 @@
-const API_KEY = "api_key=1efe7e9dcfe999d6d25a99f91164d434";
+const API_KEY = "1efe7e9dcfe999d6d25a99f91164d434";
 const ORIGIN = "https://api.themoviedb.org";
-const MOVIE_API = `${ORIGIN}/3/movie/popular?${API_KEY}&language=en-us&page=1`;
+const MOVIE_API = `${ORIGIN}/3/movie/popular?api_key=${API_KEY}&language=en-us&page=1`;
 
 const movieUiWrap = document.querySelector(".movie__ui__box");
 const searchInput = document.querySelector(".movie__search__input");
@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((movieData) => {
         searchFilterData = movieData;
         addEl(movieData.results);
-        console.log(movieData.results.map((v) => v.title.toUpperCase()));
       })
       .catch((error) => {
         console.log(error);
@@ -24,27 +23,24 @@ document.addEventListener("DOMContentLoaded", function () {
   initialize();
 
   searchInput.addEventListener("keydown", function () {
-    let searchInputVal = searchInput.value.toUpperCase();
-    const newData = searchFilterData.results.filter((v) =>
-      v.title.toUpperCase().includes(searchInputVal)
-    );
     if (window.event.keyCode == 13) {
-      movieUiWrap.innerHTML = "";
-
-      addEl(newData);
+      searchBtn.click();
     }
   });
 
   searchBtn.addEventListener("click", function () {
     let searchInputVal = searchInput.value.toUpperCase();
-    const newData = searchFilterData.results.filter((v) =>
-      v.title.toUpperCase().includes(searchInputVal)
-    );
 
+    const newMovies = filteringMovies(searchInputVal);
     movieUiWrap.innerHTML = "";
 
-    addEl(newData);
+    addEl(newMovies);
   });
+
+  const filteringMovies = (keyword) =>
+    searchFilterData.results.filter((v) =>
+      v.title.toUpperCase().includes(keyword)
+    );
 });
 
 function addEl(...params) {
