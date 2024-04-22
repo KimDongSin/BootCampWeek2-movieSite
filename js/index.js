@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let searchFilterData = "";
 
   function initialize() {
+    searchInput.focus();
+
     getData(MOVIE_API)
       .then((movieData) => {
         searchFilterData = movieData;
@@ -22,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   initialize();
 
-  searchInput.addEventListener("keydown", function () {
-    if (window.event.keyCode == 13) {
+  searchInput.addEventListener("keydown", function (e) {
+    if (e.keyCode == 13) {
       searchBtn.click();
     }
   });
