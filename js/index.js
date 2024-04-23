@@ -5,6 +5,7 @@ const MOVIE_API = `${ORIGIN}/3/movie/popular?api_key=${API_KEY}&language=en-us&p
 const movieUiWrap = document.querySelector(".movie__ui__box");
 const searchInput = document.querySelector(".movie__search__input");
 const searchBtn = document.getElementById("searchBtn");
+const min = new Date();
 
 document.addEventListener("DOMContentLoaded", function () {
   let searchFilterData = "";
@@ -14,6 +15,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     getData(MOVIE_API)
       .then((movieData) => {
+        if (!localStorage.getItem("Date")) {
+          localStorage.setItem("API_DATA", JSON.stringify(movieData));
+          localStorage.setItem(
+            "Date",
+            JSON.stringify(min.setMinutes(min.getMinutes() + 5))
+          );
+        }
+
+        if (localStorage.getItem("Date")) {
+          console.log(123);
+        }
         searchFilterData = movieData;
         addEl(movieData.results);
       })
@@ -47,6 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function addEl(...params) {
   const movieCardData = params[0];
+
+  if (movieCardData.length === 0) {
+    movieUiWrap.innerHTML = `<p class="search__notfound">검색 결과가 없습니다.</p>`;
+    return;
+  }
+
   movieCardData.forEach((v) => {
     const tempEl = `
         <div class="movie__ui__card" data-movie-id=${v.id}>
