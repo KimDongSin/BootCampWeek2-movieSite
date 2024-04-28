@@ -15,17 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     getData(MOVIE_API)
       .then((movieData) => {
-        if (!localStorage.getItem("Date")) {
-          localStorage.setItem("API_DATA", JSON.stringify(movieData));
-          localStorage.setItem(
-            "Date",
-            JSON.stringify(min.setMinutes(min.getMinutes() + 5))
-          );
-        }
-
-        if (localStorage.getItem("Date")) {
-          console.log(123);
-        }
         searchFilterData = movieData;
         addEl(movieData.results);
       })
