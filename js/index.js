@@ -5,7 +5,6 @@ const MOVIE_API = `${ORIGIN}/3/movie/popular?api_key=${API_KEY}&language=en-us&p
 const movieUiWrap = document.querySelector(".movie__ui__box");
 const searchInput = document.querySelector(".movie__search__input");
 const searchBtn = document.getElementById("searchBtn");
-const min = new Date();
 
 document.addEventListener("DOMContentLoaded", function () {
   let searchFilterData = "";
